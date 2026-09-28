@@ -1,0 +1,42 @@
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="chat" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 1-8 7H8l-5 3 1-6a8 8 0 1 1 16-4Z"/><path d="M7 10h.01M12 10h.01M17 10h.01" stroke-width="2.5"/></symbol>
+  <symbol id="badge" viewBox="0 0 24 24"><path d="m7 15-2 7 7-3 7 3-2-7"/><path d="m12 2 2 1 3-.1 1.1 2.8 2.1 2-.9 2.8.2 2.9-2.7 1.3-1.9 2.2-2.9-.8-2.8.3-1.5-2.6-2.3-1.8.6-2.9-.4-2.8L7 5.5 9 3Z"/><path d="m12 6 1.1 2.3 2.6.4-1.9 1.8.4 2.6-2.2-1.2-2.2 1.2.4-2.6-1.9-1.8 2.6-.4Z"/></symbol>
+  <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21C-4 11 5-2 12 6c7-8 16 5 0 15Z"/></symbol>
+</defs></svg>
+<div id="npc-markers" class="npc-markers" aria-label="星球上的邻居"></div>
+
+<div id="neighbors-modal" class="neighbors-backdrop" hidden>
+  <section class="neighbors-panel" role="dialog" aria-modal="true" aria-labelledby="neighbors-heading" aria-describedby="neighbors-intro">
+    <button id="neighbors-close" class="paper-close" aria-label="关闭邻居簿"><svg class="icon"><use href="#close"/></svg></button>
+    <header class="neighbors-header">
+      <span class="passport-eyebrow"><svg class="icon"><use href="#leaf"/></svg> LITTLE PLANET · NEIGHBORHOOD PASSPORT</span>
+      <h2 id="neighbors-heading">一口袋好朋友</h2>
+      <p id="neighbors-intro">七个地方，七位愿意为你停下来的邻居。</p>
+      <div class="friendship-progress"><span><b id="badge-total">0</b> / 7 枚友谊徽章</span><div id="badge-progress" aria-hidden="true"></div></div>
+    </header>
+    <div class="neighbors-scroll"><div id="residents-grid" class="residents-grid"></div></div>
+    <footer class="neighbors-footer"><svg class="icon"><use href="#heart"/></svg><p id="neighbors-summary">第一次完整聊完天，就能收到一枚专属徽章。</p><span><kbd>B</kbd> 关闭</span></footer>
+  </section>
+</div>
+
+<section id="conversation" class="conversation" role="dialog" aria-modal="true" aria-labelledby="dialogue-name" aria-describedby="dialogue-live-text" hidden>
+  <div class="conversation-shade"></div>
+  <div class="conversation-moment"><svg class="icon"><use href="#leaf"/></svg><span>把脚步放慢一点，听一个新朋友的故事。</span></div>
+  <article id="dialogue-bubble" class="dialogue-bubble">
+    <div id="dialogue-portrait" class="dialogue-portrait"></div>
+    <div class="dialogue-nameplate"><b id="dialogue-name">栗栗</b><span id="dialogue-role">森林信差</span></div>
+    <span id="dialogue-occasion" class="dialogue-occasion">初次见面</span>
+    <button id="dialogue-close" class="paper-close dialogue-close" aria-label="暂别，结束当前对话"><svg class="icon"><use href="#close"/></svg></button>
+    <div id="dialogue-message" class="dialogue-message">
+      <p class="dialogue-text" aria-hidden="true"><span id="dialogue-typed"></span><span class="dialogue-caret">▾</span></p>
+      <div id="dialogue-choices" class="dialogue-choices" role="group" aria-label="选择你的回应" hidden></div>
+    </div>
+    <p id="dialogue-live-text" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+    <div id="dialogue-gift" class="dialogue-gift" hidden>
+      <div id="gift-art" class="gift-art"></div>
+      <div class="gift-copy"><small>A LITTLE TOKEN OF FRIENDSHIP</small><h2 id="gift-name"></h2><p id="gift-note"></p><span class="gift-saved"><svg class="icon"><use href="#check"/></svg><span id="gift-save-message">已放进你的邻居簿</span></span></div>
+      <div class="gift-sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <footer class="dialogue-footer"><span id="dialogue-hint" class="dialogue-hint">点击文字，或按 E / 空格继续</span><button id="dialogue-book" class="dialogue-book" hidden><svg class="icon"><use href="#book"/></svg>看看邻居簿</button><button id="dialogue-next" class="dialogue-next"><span id="dialogue-next-label">继续听</span><svg class="icon"><use href="#arrow"/></svg></button></footer>
+  </article>
+</section>

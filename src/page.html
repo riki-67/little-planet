@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101d26"><title>Little Planet — 口袋里的冒险</title>
+<style>/*__STYLE__*/</style>
+</head>
+<body>
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><ellipse cx="12" cy="12" rx="3.8" ry="8.5"/><path d="M3.7 9h16.6M3.7 15h16.6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M12 6C8 3 4 4 3 5v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v14"/><path d="M6 8h3M6 11h3m6-3h3m-3 3h3"/></symbol>
+<symbol id="sound" viewBox="0 0 24 24"><path d="m11 5-5 4H3v6h3l5 4Zm4 3c3 2 3 6 0 8m3-11c5 4 5 10 0 14"/></symbol>
+<symbol id="muted" viewBox="0 0 24 24"><path d="m11 5-5 4H3v6h3l5 4Zm5 4 5 6m-5 0 5-6"/></symbol>
+<symbol id="help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.2 1.8c-1.2.9-1.7 1.2-1.7 2.7m0 3h.01"/></symbol>
+<symbol id="close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+<symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></symbol>
+<symbol id="star" viewBox="0 0 24 24"><path d="m12 3 2.6 5.8 6.3.7-4.7 4.3 1.3 6.2-5.5-3.2L6.5 20l1.3-6.2L3.1 9.5l6.3-.7Z"/></symbol>
+<symbol id="compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5Z"/></symbol>
+<symbol id="expand" viewBox="0 0 24 24"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/></symbol>
+<symbol id="focus" viewBox="0 0 24 24"><path d="M7 3H3v4m14-4h4v4M3 17v4h4m14-4v4h-4"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+<symbol id="minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+<symbol id="walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="m7 20 4-6 2-7m-2 7 5 7m-3-13 4 4 3 1M12 8 8 10l-2 4"/></symbol>
+<symbol id="jump" viewBox="0 0 24 24"><path d="m7 9 5-5 5 5m-5-5v13M5 20h14"/></symbol>
+<symbol id="leaf" viewBox="0 0 24 24"><path d="M19 4c-8-1-15 3-14 9 1 7 14 7 14-9Z"/><path d="M4 21 15 9m-5 5v-4m0 4h4"/></symbol>
+</defs></svg>
+<div id="scene" aria-label="低多边形三维小星球。点击地面行走，拖拽转动视角，滚轮缩放。"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div id="loading" role="status"><div class="loading-planet"><svg class="icon"><use href="#globe"/></svg><span></span></div><strong>LITTLE PLANET</strong><p id="load-message">给世界一点点时间生长</p><div class="load-track"><i id="load-progress"></i></div><small>A POCKET ADVENTURE</small></div>
+
+<header class="topbar hud">
+  <button id="home-button" class="brand" aria-label="回到森林营地">
+    <svg class="brand-mark" viewBox="0 0 42 42" fill="none" aria-hidden="true"><path d="m22 5 12 7 3 13-10 11-14-2-7-10 3-12Z"/><path d="m22 5 3 14 12 6M9 12l16 7 2 17M6 24l19-5-12 15m21-22L13 34M9 12l25 0M6 24l31 1" opacity=".55"/><ellipse cx="21" cy="21" rx="21" ry="7" transform="rotate(-28 21 21)"/></svg>
+    <span><b>LITTLE PLANET</b><small>A POCKET ADVENTURE</small></span>
+  </button>
+  <div class="collection-tools"><button id="journal-button" class="journal-button" title="探索手记" aria-label="打开探索手记" aria-expanded="false"><svg class="icon"><use href="#book"/></svg><span><b id="wonder-count">0</b><i>/ 7</i></span><small>small wonders</small></button>
+  <button id="neighbors-button" class="neighbors-button" title="邻居与徽章 · B" aria-label="打开邻居簿" aria-expanded="false"><svg class="icon"><use href="#badge"/></svg><span><b id="badge-count">0</b><i>/ 7</i></span><small>友谊徽章</small></button></div>
+  <nav class="top-actions" aria-label="游戏设置">
+    <button id="view-button" class="icon-button active" title="全景 / 近景 · U" aria-label="切换全景与近景" aria-pressed="true"><svg class="icon"><use href="#globe"/></svg></button>
+    <button id="sound-button" class="icon-button" title="开启声音" aria-label="开启环境声音" aria-pressed="false"><svg class="icon"><use id="sound-icon" href="#muted"/></svg></button>
+    <button id="fullscreen-button" class="icon-button fullscreen-button" title="全屏" aria-label="全屏"><svg class="icon"><use href="#expand"/></svg></button>
+    <button id="help-button" class="icon-button" title="怎么玩" aria-label="打开操作说明"><svg class="icon"><use href="#help"/></svg></button>
+  </nav>
+</header>
+
+<main class="hud overlay">
+  <section class="region-panel" aria-live="polite"><div id="region-category">FOREST · 01</div><h1 id="region-name">Fernwood</h1><p id="region-description">每一次远行，都始于一小步。</p><span id="region-chinese">蕨木森林</span></section>
+  <div class="view-indicator"><i></i><span id="view-label">星球全景</span></div>
+  <div class="camera-tools"><button class="icon-button" id="zoom-in" title="拉近" aria-label="拉近视角"><svg class="icon"><use href="#plus"/></svg></button><span></span><button class="icon-button" id="zoom-out" title="拉远" aria-label="拉远视角"><svg class="icon"><use href="#minus"/></svg></button><button class="icon-button return-button" id="focus-button" title="回到角色 · C" aria-label="将视角移回角色"><svg class="icon"><use href="#focus"/></svg></button></div>
+  <button id="interaction" class="interaction-card" aria-label="照料篝火"><span class="interaction-key">E</span><span class="interaction-copy"><small id="interaction-caption">A SMALL WONDER</small><b id="interaction-label">照料篝火</b></span><svg class="icon"><use id="interaction-icon" href="#arrow"/></svg></button>
+  <button id="secondary-interaction" class="secondary-interaction" hidden><svg class="icon"><use id="secondary-icon" href="#leaf"/></svg><span id="secondary-label"></span><kbd>F</kbd></button>
+  <div class="travel-hints" id="travel-hints"><span class="hint-dot"></span><span class="desktop-copy">点击地面行走</span><span class="mobile-copy">轻点地面行走</span><i></i><span>拖拽环绕</span><i></i><span class="desktop-copy">滚轮缩放</span><span class="mobile-copy">双指缩放</span></div>
+  <div class="keybar" aria-label="快捷键"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><em>行走</em></span><span><kbd>SHIFT</kbd><em>奔跑</em></span><span><kbd>SPACE</kbd><em>跳跃</em></span><span><kbd>E</kbd><em>互动</em></span><span><kbd>U</kbd><em>星球</em></span><span><kbd>B</kbd><em>徽章</em></span></div>
+  <div id="joystick" class="joystick" aria-label="拖动摇杆移动角色"><span id="joystick-knob"></span></div>
+  <div class="touch-actions"><button id="touch-jump" class="icon-button" aria-label="跳跃"><svg class="icon"><use href="#jump"/></svg></button><button id="touch-view" class="icon-button" aria-label="切换全景与近景"><svg class="icon"><use href="#globe"/></svg></button></div>
+</main>
+
+<section class="journal panel" id="journal" hidden aria-label="探索手记">
+  <button id="journal-close" class="icon-button panel-close" aria-label="关闭探索手记"><svg class="icon"><use href="#close"/></svg></button>
+  <div class="eyebrow">A WORLD WORTH WANDERING</div><h2>小小的奇迹</h2><p>七处风景，七个值得停留的理由。<br>选择一站，继续你的口袋冒险。</p>
+  <div class="journal-progress" id="journal-progress" aria-label="收集进度"></div>
+  <div id="journal-list" class="journal-list"></div>
+  <div class="journal-footer"><svg class="icon"><use href="#leaf"/></svg><span id="journal-footer">不必赶路，慢慢发现。</span></div>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg class="icon"><use href="#leaf"/></svg><span></span></div>
+<div class="discovery" id="discovery" aria-live="polite"><span class="discovery-orbit"><svg class="icon"><use href="#star"/></svg></span><small>A SMALL WONDER FOUND</small><h2 id="discovery-name">林间的微光</h2><p id="discovery-description">世界又多了一点点温暖。</p><div id="discovery-number">01 / 07</div></div>
+
+<div class="modal-backdrop" id="help-modal" hidden><section class="help-panel panel" role="dialog" aria-modal="true" aria-labelledby="help-heading"><button id="help-close" class="icon-button panel-close" aria-label="关闭操作说明"><svg class="icon"><use href="#close"/></svg></button><div class="eyebrow">WELCOME TO YOUR LITTLE WORLD</div><h2 id="help-heading">不必着急，<br>世界很小。</h2><p>七个地方，住着七位温柔的邻居。靠近后按 E 聊天，选一句想说的话，完整聊完首次见面对话后，就能收到专属友谊徽章。再次拜访还有新故事；七处发光景物也仍然等你探索。</p><div class="help-controls"><div><span><kbd>W A S D</kbd> / <kbd>↑ ↓ ← →</kbd></span><b>在球面上行走</b></div><div><span><kbd>SHIFT</kbd> + 移动</span><b>小跑一会儿</b></div><div><span><kbd>SPACE</kbd></span><b>轻轻跳起来</b></div><div><span><kbd>E</kbd></span><b>与邻居聊天 / 景物互动</b></div><div><span><kbd>F</kbd> / <kbd>B</kbd></span><b>另一互动 / 邻居与徽章</b></div><div><span><kbd>U</kbd> / <kbd>C</kbd></span><b>切换视角 / 找到自己</b></div><div><span>拖拽 / 滚轮</span><b>环绕视角 / 缩放</b></div></div><p class="help-touch">也可以直接点击地面行走。在触屏上，使用左侧摇杆，或轻点地面；双指可缩放。</p><button id="help-start" class="primary-button"><span>出发吧，小小旅人</span><svg class="icon"><use href="#arrow"/></svg></button><small class="help-note">程序化低多边形世界 · Three.js · 可离线游玩<br>收集进度会在浏览器允许时自动保存。</small></section></div>
+<!--__NEIGHBOR_UI__-->
+<script>/*__SCRIPT__*/</script>
+</body>
+</html>

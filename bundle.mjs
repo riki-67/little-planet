@@ -1,0 +1,14 @@
+import { build } from 'esbuild';
+import { readFile,writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root=path.dirname(fileURLToPath(import.meta.url));
+await build({entryPoints:[path.join(root,'src/main.js')],outfile:path.join(root,'app.bundle.js'),bundle:true,minify:true,format:'iife',target:'es2020',legalComments:'inline'});
+const template=await readFile(path.join(root,'src/page.html'),'utf8');
+const style=(await Promise.all(['style.css','neighbors.css'].map(file=>readFile(path.join(root,'src',file),'utf8')))).join('\n');
+const neighborUI=await readFile(path.join(root,'src/neighbors.html'),'utf8');
+const script=(await readFile(path.join(root,'app.bundle.js'),'utf8')).replace(/<\/script/gi,'<\\/script');
+const license=await readFile(path.join(root,'../node_modules/three/LICENSE'),'utf8').catch(()=>readFile(path.join(root,'node_modules/three/LICENSE'),'utf8'));
+const html=template.replace('<!--__NEIGHBOR_UI__-->',()=>neighborUI).replace('/*__STYLE__*/',()=>style).replace('/*__SCRIPT__*/',()=>script).replace('</head>','<!-- Three.js MIT license\n'+license+'\n-->\n</head>');
+await writeFile(path.join(root,'index.html'),html);
+console.log('Built index.html — fully offline, ready for GitHub Pages.');
